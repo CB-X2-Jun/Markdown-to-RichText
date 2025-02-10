@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="CB_X2_Jun">
+    <link rel="icon" href="/favicon.ico">
     <title>Markdown 至 富文本 转换器</title>
     <style>
         * {
@@ -158,8 +160,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="title">Markdown 转换器</h1>
-          <p>目前仅支持超链接、粗体斜体(*与_均可)、无序列表、标题行</p>
+            <h1 class="title">Markdown 至富文本转换器——可复制</h1>
+          <p>目前仅支持超链接、粗体斜体(*与_均可)、无序列表、标题行、没有语言标签的多行代码(可能有点bug)、行内代码。</p>
         </div>
         <div class="grid">
             <div>
@@ -198,6 +200,9 @@
             html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
             html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
             html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+            html = html.replace(/^#### (.*$)/gm, '<h4>$1</h4>');
+            html = html.replace(/^##### (.*$)/gm, '<h5>$1</h5>');
+            html = html.replace(/^###### (.*$)/gm, '<h6>$1</h6>');
 
             // Bold
             html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
@@ -215,7 +220,7 @@
             html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
 
             // Code blocks
-            html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+            html = html.replace(/```([\s\S]*?)\n```/g, '<pre><code>$1</code></pre>');
 
             // Inline code
             html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
@@ -270,7 +275,7 @@
             textarea.select();
             try {
                 document.execCommand('copy');
-                alert('内容已复制到剪贴板（纯文本格式）');
+                alert('内容已复制到剪贴板（纯文本格式，因为由于某种原因而无法复制富文本）');
             } catch (err) {
                 console.error('复制失败:', err);
                 alert('复制失败，请手动复制');
